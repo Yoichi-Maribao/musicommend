@@ -4,12 +4,8 @@ import Cookies from 'js-cookie';
 
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
-import AppBar from '@material-ui/core/AppBar';
-import ToolBar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import { AppBar, Toolbar, Typography, Button } from '@mui/material';
+import { Logout, Login, LibraryMusic, HowToReg } from '@mui/icons-material';
 
 import { signOut } from 'lib/api/auth';
 import { AuthContext } from 'App';
@@ -44,7 +40,7 @@ const Header: React.FC = () => {
         Cookies.remove('_uid');
 
         setIsSignedIn(false);
-        navigate('/signin');
+        navigate('/');
 
         console.log('Succeeded in sign out');
       } else {
@@ -66,6 +62,7 @@ const Header: React.FC = () => {
             className={classes.linkBtn}
             onClick={handleSignOut}
           >
+            <Logout />
             Sign out
           </Button>
         );
@@ -78,6 +75,7 @@ const Header: React.FC = () => {
               color="inherit"
               className={classes.linkBtn}
             >
+              <Login />
               Sign in
             </Button>
             <Button
@@ -86,6 +84,7 @@ const Header: React.FC = () => {
               color="inherit"
               className={classes.linkBtn}
             >
+              <HowToReg />
               Sign Up
             </Button>
           </>
@@ -98,25 +97,27 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <AppBar position="static">
-        <ToolBar>
-          <IconButton
-            edge="start"
-            className={classes.iconButton}
-            color="inherit"
-          >
-            <MenuIcon />
-          </IconButton>
+      <AppBar position="static" color="primary">
+        <Toolbar>
           <Typography
             component={Link}
             to="/"
             variant="h6"
             className={classes.title}
           >
-            Sample
+            Musicommend
           </Typography>
+          <Button
+            component={Link}
+            to="/musics"
+            color="inherit"
+            className={classes.linkBtn}
+          >
+            <LibraryMusic />
+            Musics
+          </Button>
           <AuthButtons />
-        </ToolBar>
+        </Toolbar>
       </AppBar>
     </>
   );

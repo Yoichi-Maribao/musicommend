@@ -8,11 +8,13 @@ import {
 
 import CommonLayout from 'components/layouts/CommonLayout';
 import Home from 'components/pages/Home';
+import Top from 'components/pages/Top';
 import SignUp from 'components/pages/SignUp';
 import SignIn from 'components/pages/SignIn';
 
 import { getCurrentUser } from 'lib/api/auth';
 import { User } from 'interfaces/index';
+import Musics from 'components/pages/Musics';
 
 export const AuthContext = createContext(
   {} as {
@@ -86,6 +88,8 @@ const App: React.FC = () => {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/signin" element={<SignIn />} />
             <Route element={<Private children={<Home />} />} />
+            <Route path="/" element={<Top />} />
+            <Route path="/musics" element={<Musics />} />
           </Routes>
         </CommonLayout>
       </AuthContext.Provider>
