@@ -22,6 +22,13 @@ class Api::V1::MusicsController < ApplicationController
   end
 
   def destroy
+    music = Music.find(params[:id])
+    if music.destroy
+      head :no_content
+    else
+      render json: { error: "Failed to destroy"}, status: 422
+    end
+
   end
 
   def update
