@@ -12,6 +12,7 @@ import SignUp from 'components/pages/SignUp';
 import SignIn from 'components/pages/SignIn';
 import Musics from 'components/pages/Musics';
 import MusicPage from 'components/pages/MusicPage';
+import EditMusic from 'components/pages/EditMusic';
 
 import { getCurrentUser } from 'lib/api/auth';
 import { User } from 'interfaces/index';
@@ -93,6 +94,10 @@ const App: React.FC = () => {
             <Route
               path="/musics/:id"
               element={<Private children={<MusicPage />} />}
+            />
+            <Route
+              path="/musics/:id/edit"
+              element={<Private children={<EditMusic />} />}
             />
           </Routes>
         </CommonLayout>

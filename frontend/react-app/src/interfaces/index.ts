@@ -16,6 +16,7 @@ export interface User {
   provider: string;
   email: string;
   name: string;
+  introduction: string | null;
   allowPasswordChange: boolean;
   created_at: Date;
   updated_at: Date;
