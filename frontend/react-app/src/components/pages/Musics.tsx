@@ -1,8 +1,12 @@
-import { Music } from 'interfaces';
-import client from 'lib/api/client';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Grid } from '@mui/material';
+import { Music } from 'interfaces';
+import Sidebar from 'components/layouts/Sidebar';
+import client from 'lib/api/client';
 
 const Musics: React.FC = () => {
+  const navigate = useNavigate();
   const [musics, setMusics] = useState<Music[]>([]);
   const getMusics = async () => {
     client
@@ -12,6 +16,9 @@ const Musics: React.FC = () => {
       })
       .catch((err) => {
         console.log(err);
+        if (err.response.status === 401) {
+          navigate('/signin');
+        }
       });
   };
 
@@ -21,25 +28,28 @@ const Musics: React.FC = () => {
 
   return (
     <>
-      <h1>Musics</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>タイトル</th>
-            <th>本文</th>
-          </tr>
-        </thead>
-        <tbody>
-          {musics.map((val, key) => {
-            return (
-              <tr key={key}>
-                <td>{val.name}</td>
-                <td>{val.body}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <Sidebar />
+      <Grid item md={8}>
+        <h1>Musics</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>タイトル</th>
+              <th>本文</th>
+            </tr>
+          </thead>
+          <tbody>
+            {musics.map((val, key) => {
+              return (
+                <tr key={key}>
+                  <td>{val.title}</td>
+                  <td>{val.body}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </Grid>
     </>
   );
 };

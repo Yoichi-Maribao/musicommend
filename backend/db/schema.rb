@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 2022_01_11_023346) do
   end
 
   create_table "musics", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
+    t.string "title"
     t.text "body"
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false

@@ -24,6 +24,11 @@ export interface User {
 export interface Music {
   id: number;
   user_id: number;
-  name: string;
+  title: string;
+  body: string;
+}
+
+export interface PostMusic {
+  title: string;
   body: string;
 }

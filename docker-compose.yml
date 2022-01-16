@@ -1,9 +1,11 @@
-version: "3"
+version: '3'
 services:
   db:
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: password
+    cap_add:
+      - SYS_NICE
     command: --default-authentication-plugin=mysql_native_password
     volumes:
       - mysql-data:/var/lib/mysql
@@ -22,18 +24,17 @@ services:
       TZ: Asia/Tokyo
       RAILS_ENV: development
     ports:
-      - "3001:3000"
+      - '3001:3000'
     depends_on:
       - db
   front:
-    build: 
+    build:
       context: ./frontend/
       dockerfile: Dockerfile
     volumes:
       - ./frontend:/usr/src/app
     command: sh -c "cd react-app && yarn start"
     ports:
-      - "3000:3000"
+      - '3000:3000'
 volumes:
   mysql-data:
-

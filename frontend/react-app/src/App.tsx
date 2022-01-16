@@ -87,9 +87,9 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/signup" element={<SignUp />} />
             <Route path="/signin" element={<SignIn />} />
-            <Route element={<Private children={<Home />} />} />
+            {/* <Route path="/" element={<Private children={<Home />} />} /> */}
             <Route path="/" element={<Top />} />
-            <Route path="/musics" element={<Musics />} />
+            <Route path="/musics" element={<Private children={<Musics />} />} />
           </Routes>
         </CommonLayout>
       </AuthContext.Provider>
