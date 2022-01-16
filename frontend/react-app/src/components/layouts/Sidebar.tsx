@@ -1,12 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from 'App';
-import { User } from 'interfaces/index';
 import { useNavigate } from 'react-router-dom';
 import { Grid, Card, CardContent, CardHeader } from '@mui/material';
 import { TextField, Button } from '@mui/material';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-// import client from 'lib/api/client';
-import axios from 'axios';
+import client from 'lib/api/client';
 import { PostMusic } from 'interfaces/index';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -20,32 +18,30 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const Sidebar: React.FC = (props) => {
+const Sidebar: React.FC = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
-  const [user, setUser] = useState<User[]>([]);
   const { currentUser } = useContext(AuthContext);
 
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const postMusic = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    let params: PostMusic = {
+    let params = {
+      user_id: currentUser?.id,
       title: title,
       body: body,
     };
 
     try {
-      const res = await axios.post(
-        'http://localhost:3001/api/v1/musics/',
+      const res = await client.post(
+        'http://localhost:3001/api/v1/musics',
         params
       );
       console.log(res);
-
       if (res.status === 200) {
-        //ここに遷移先を書く
-        navigate('musics');
+        navigate(`/musics/${res.data.id}`);
       }
     } catch (err) {
       console.log(err);
@@ -65,7 +61,7 @@ const Sidebar: React.FC = (props) => {
               variant="outlined"
               required
               fullWidth
-              label="Title"
+              label="タイトル"
               value={title}
               margin="dense"
               onChange={(event) => setTitle(event.target.value)}
@@ -74,7 +70,7 @@ const Sidebar: React.FC = (props) => {
               variant="outlined"
               required
               fullWidth
-              label="Body"
+              label="本文"
               value={body}
               margin="dense"
               onChange={(event) => setBody(event.target.value)}
@@ -87,7 +83,7 @@ const Sidebar: React.FC = (props) => {
               color="success"
               disabled={!title || !body ? true : false}
               className={classes.submitBtn}
-              onClick={() => handleSubmit}
+              onClick={postMusic}
             >
               投稿する
             </Button>

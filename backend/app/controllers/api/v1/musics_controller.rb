@@ -5,6 +5,8 @@ class Api::V1::MusicsController < ApplicationController
   end
 
   def show
+    music = Music.find(params[:id])
+    render json: music
   end
 
   def edit
@@ -13,7 +15,7 @@ class Api::V1::MusicsController < ApplicationController
   def create
     music = Music.new(music_params)
     if music.save
-      render json: music
+      render json: music, status: 200
     else
       render json: music.errors, status: 422
     end
@@ -27,7 +29,7 @@ class Api::V1::MusicsController < ApplicationController
 
   private
   def music_params
-    params.require(:music).permit(:title, :body).merge(user_id: current_api_v1_user.id)
+    params.require(:music).permit(:title, :body, :user_id)
   end
 
 end

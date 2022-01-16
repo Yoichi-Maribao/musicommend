@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Grid } from '@mui/material';
 import { Music } from 'interfaces';
 import Sidebar from 'components/layouts/Sidebar';
@@ -42,7 +42,9 @@ const Musics: React.FC = () => {
             {musics.map((val, key) => {
               return (
                 <tr key={key}>
-                  <td>{val.title}</td>
+                  <td>
+                    <Link to={`/musics/${val.id}`}>{val.title}</Link>
+                  </td>
                   <td>{val.body}</td>
                 </tr>
               );

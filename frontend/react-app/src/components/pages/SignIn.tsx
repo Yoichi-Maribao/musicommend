@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
-import Button from '@material-ui/core/Button';
+import { Button } from '@mui/material';
 import Box from '@material-ui/core/Box';
 
 import { AuthContext } from 'App';
@@ -45,7 +45,7 @@ const SignIn: React.FC = () => {
 
   const { setIsSignedIn, setCurrentUser } = useContext(AuthContext);
 
-  const [email, setEmail] = useState<string>('');
+  const [name, setName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false);
 
@@ -53,7 +53,7 @@ const SignIn: React.FC = () => {
     e.preventDefault();
 
     const params: SignInParams = {
-      email: email,
+      name: name,
       password: password,
     };
 
@@ -91,10 +91,10 @@ const SignIn: React.FC = () => {
               variant="outlined"
               required
               fullWidth
-              label="Email"
-              value={email}
+              label="Name"
+              value={name}
               margin="dense"
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={(event) => setName(event.target.value)}
             />
             <TextField
               variant="outlined"
@@ -113,8 +113,8 @@ const SignIn: React.FC = () => {
               variant="contained"
               size="large"
               fullWidth
-              color="default"
-              disabled={!email || !password ? true : false} // 空欄があった場合はボタンを押せないように
+              color="success"
+              disabled={!name || !password ? true : false} // 空欄があった場合はボタンを押せないように
               className={classes.submitBtn}
               onClick={handleSubmit}
             >
@@ -135,7 +135,7 @@ const SignIn: React.FC = () => {
         open={alertMessageOpen}
         setOpen={setAlertMessageOpen}
         severity="error"
-        message="Invalid email or password"
+        message="Invalid name or password"
       />
     </>
   );
