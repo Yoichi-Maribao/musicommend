@@ -25,6 +25,12 @@ class Api::V1::MusicsController < ApplicationController
   end
 
   def update
+    music = Music.find(params[:id])
+    if music.update(music_params)
+      render json: music, status: 200
+    else
+      render json: music.errors, status: 422
+    end
   end
 
   private

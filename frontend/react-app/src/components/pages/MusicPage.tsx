@@ -1,8 +1,17 @@
 import Sidebar from 'components/layouts/Sidebar';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import client from 'lib/api/client';
-import { Grid } from '@mui/material';
+import {
+  Grid,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from '@mui/material';
 
 const MusicPage: React.FC = () => {
   const params = useParams<{ id: string }>();
@@ -36,20 +45,28 @@ const MusicPage: React.FC = () => {
       <Sidebar />
       <Grid item md={8}>
         <h1>Music</h1>
-        <table>
-          <thead>
-            <tr>
-              <th>タイトル</th>
-              <th>本文</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{music.title}</td>
-              <td>{music.body}</td>
-            </tr>
-          </tbody>
-        </table>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>タイトル</TableCell>
+                <TableCell>本文</TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell>{music.title}</TableCell>
+                <TableCell>{music.body}</TableCell>
+                <TableCell>
+                  <Link to={`/musics/${params.id}/edit`}>編集</Link>
+                </TableCell>
+                <TableCell>削除</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Grid>
     </>
   );

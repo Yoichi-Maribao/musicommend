@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Grid } from '@mui/material';
+import {
+  Grid,
+  Table,
+  TableBody,
+  TableContainer,
+  TableCell,
+  TableHead,
+  TableRow,
+  Paper,
+} from '@mui/material';
 import { Music } from 'interfaces';
 import Sidebar from 'components/layouts/Sidebar';
 import client from 'lib/api/client';
@@ -31,26 +40,28 @@ const Musics: React.FC = () => {
       <Sidebar />
       <Grid item md={8}>
         <h1>Musics</h1>
-        <table>
-          <thead>
-            <tr>
-              <th>タイトル</th>
-              <th>本文</th>
-            </tr>
-          </thead>
-          <tbody>
-            {musics.map((val, key) => {
-              return (
-                <tr key={key}>
-                  <td>
-                    <Link to={`/musics/${val.id}`}>{val.title}</Link>
-                  </td>
-                  <td>{val.body}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>タイトル</TableCell>
+                <TableCell>本文</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {musics.map((val, key) => {
+                return (
+                  <TableRow key={key}>
+                    <TableCell>
+                      <Link to={`/musics/${val.id}`}>{val.title}</Link>
+                    </TableCell>
+                    <TableCell>{val.body}</TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Grid>
     </>
   );
