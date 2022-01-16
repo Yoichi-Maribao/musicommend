@@ -6,7 +6,7 @@ export interface SignUpParams {
 }
 
 export interface SignInParams {
-  email: string;
+  name: string;
   password: string;
 }
 
@@ -19,4 +19,17 @@ export interface User {
   allowPasswordChange: boolean;
   created_at: Date;
   updated_at: Date;
+}
+
+export interface Music {
+  id: number | null;
+  user_id: number | null;
+  title: string;
+  body: string;
+}
+
+export interface PostMusic {
+  user_id: number;
+  title: string;
+  body: string;
 }

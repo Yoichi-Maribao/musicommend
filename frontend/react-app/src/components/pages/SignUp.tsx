@@ -53,7 +53,7 @@ const SignUp: React.FC = () => {
       password: password,
       passwordConfirmation: passwordConfirmation,
     };
-
+    console.log(params);
     try {
       const res = await signUp(params);
       console.log(res);
