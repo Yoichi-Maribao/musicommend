@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { AuthContext } from 'App';
+import { Link } from 'react-router-dom';
 import {
   Grid,
   Table,
@@ -15,9 +16,10 @@ import Sidebar from 'components/layouts/Sidebar';
 import client from 'lib/api/client';
 
 const Musics: React.FC = () => {
-  const navigate = useNavigate();
   const [musics, setMusics] = useState<Music[]>([]);
-  const getMusics = async () => {
+  const { currentUser } = useContext(AuthContext);
+
+  const getMusics = () => {
     client
       .get('musics')
       .then((res) => {
@@ -25,9 +27,6 @@ const Musics: React.FC = () => {
       })
       .catch((err) => {
         console.log(err);
-        if (err.response.status === 401) {
-          navigate('/signin');
-        }
       });
   };
 
@@ -37,7 +36,7 @@ const Musics: React.FC = () => {
 
   return (
     <>
-      <Sidebar />
+      <Sidebar user={currentUser!} />
       <Grid item md={8}>
         <h1>Musics</h1>
         <TableContainer component={Paper}>

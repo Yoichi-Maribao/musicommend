@@ -5,7 +5,13 @@ import Cookies from 'js-cookie';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
-import { Logout, Login, LibraryMusic, HowToReg } from '@mui/icons-material';
+import {
+  Logout,
+  Login,
+  LibraryMusic,
+  HowToReg,
+  SupervisorAccount,
+} from '@mui/icons-material';
 
 import { signOut } from 'lib/api/auth';
 import { AuthContext } from 'App';
@@ -115,6 +121,15 @@ const Header: React.FC = () => {
           >
             <LibraryMusic />
             Musics
+          </Button>
+          <Button
+            component={Link}
+            to="/users"
+            color="inherit"
+            className={classes.linkBtn}
+          >
+            <SupervisorAccount />
+            Users
           </Button>
           <AuthButtons />
         </Toolbar>

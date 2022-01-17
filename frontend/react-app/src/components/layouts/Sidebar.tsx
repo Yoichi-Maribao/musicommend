@@ -1,11 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from 'App';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Grid, Card, CardContent, CardHeader, Paper } from '@mui/material';
 import { TextField, Button } from '@mui/material';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import { ManageAccounts } from '@mui/icons-material';
 import client from 'lib/api/client';
-import { PostMusic } from 'interfaces/index';
+import { PostMusic, User } from 'interfaces/index';
 import NoImage from 'images/no_image.jpg';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -25,9 +26,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const Sidebar: React.FC = () => {
+const Sidebar = ({ user }: { user: User }) => {
   const classes = useStyles();
   const navigate = useNavigate();
+
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
   const { currentUser } = useContext(AuthContext);
@@ -36,7 +38,7 @@ const Sidebar: React.FC = () => {
     e.preventDefault();
 
     let params: PostMusic = {
-      user_id: currentUser!.id,
+      userId: currentUser!.id,
       title: title,
       body: body,
     };
@@ -59,12 +61,21 @@ const Sidebar: React.FC = () => {
     <Grid item md={4}>
       <Paper className={classes.alignCenter}>
         <img src={NoImage} alt="プロフィール画像" className={classes.image} />
-        <h3>{currentUser?.name}</h3>
+        <h3>{user.name}</h3>
         <p>
           {currentUser?.introduction
             ? currentUser?.introduction
             : '自己紹介文が登録されていません'}
         </p>
+        <Button
+          component={Link}
+          to={`/users/${user.id}/edit`}
+          color="primary"
+          variant="outlined"
+        >
+          <ManageAccounts />
+          アカウント情報変更
+        </Button>
       </Paper>
       <form noValidate autoComplete="off">
         <Card>

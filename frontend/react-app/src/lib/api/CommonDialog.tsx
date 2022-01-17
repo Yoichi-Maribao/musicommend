@@ -13,7 +13,7 @@ const CommonDialog: React.FC<{
     setOpen(isOpen);
   }, [isOpen]);
   return (
-    <>
+    <div>
       <Dialog
         open={isOpen}
         keepMounted
@@ -31,7 +31,7 @@ const CommonDialog: React.FC<{
           </Button>
         </DialogActions>
       </Dialog>
-    </>
+    </div>
   );
 };
 

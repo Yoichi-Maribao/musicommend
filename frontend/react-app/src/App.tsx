@@ -7,12 +7,15 @@ import {
 } from 'react-router-dom';
 
 import CommonLayout from 'components/layouts/CommonLayout';
-import Top from 'components/pages/Top';
-import SignUp from 'components/pages/SignUp';
-import SignIn from 'components/pages/SignIn';
-import Musics from 'components/pages/Musics';
-import MusicPage from 'components/pages/MusicPage';
-import EditMusic from 'components/pages/EditMusic';
+import Top from 'components/pages/homes/Top';
+import SignUp from 'components/pages/auth/SignUp';
+import SignIn from 'components/pages/auth/SignIn';
+import Musics from 'components/pages/musics/Musics';
+import MusicPage from 'components/pages/musics/MusicPage';
+import EditMusic from 'components/pages/musics/EditMusic';
+import UsersList from 'components/pages/users/UsersList';
+import UserPage from 'components/pages/users/UserPage';
+import EditUser from 'components/pages/users/EditUser';
 
 import { getCurrentUser } from 'lib/api/auth';
 import { User } from 'interfaces/index';
@@ -98,6 +101,18 @@ const App: React.FC = () => {
             <Route
               path="/musics/:id/edit"
               element={<Private children={<EditMusic />} />}
+            />
+            <Route
+              path="/users"
+              element={<Private children={<UsersList />} />}
+            />
+            <Route
+              path="/users/:id"
+              element={<Private children={<UserPage />} />}
+            />
+            <Route
+              path="/users/:id/edit"
+              element={<Private children={<EditUser />} />}
             />
           </Routes>
         </CommonLayout>

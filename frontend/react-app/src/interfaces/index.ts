@@ -11,26 +11,27 @@ export interface SignInParams {
 }
 
 export interface User {
-  id: number;
+  id: number | null;
   uid: string;
   provider: string;
   email: string;
   name: string;
   introduction: string | null;
+  image: string | null;
   allowPasswordChange: boolean;
-  created_at: Date;
-  updated_at: Date;
+  created_at: Date | null;
+  updated_at: Date | null;
 }
 
 export interface Music {
   id: number | null;
-  user_id: number | null;
+  userId: number | null;
   title: string;
   body: string;
 }
 
 export interface PostMusic {
-  user_id: number;
+  userId: number | null;
   title: string;
   body: string;
 }
