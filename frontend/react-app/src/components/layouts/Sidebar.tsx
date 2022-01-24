@@ -60,7 +60,11 @@ const Sidebar = ({ user }: { user: User }) => {
   return (
     <Grid item md={4}>
       <Paper className={classes.alignCenter}>
-        <img src={NoImage} alt="プロフィール画像" className={classes.image} />
+        <img
+          src={user.image ? `http://localhost:3001/${user.image}` : NoImage}
+          alt="プロフィール画像"
+          className={classes.image}
+        />
         <h3>{user.name}</h3>
         <p>
           {currentUser?.introduction

@@ -38,9 +38,10 @@ const UserPage: React.FC = () => {
     client
       .get(`/users/${params.id}`)
       .then((res) => {
-        console.log(res.data.musics);
+        console.log(res.data);
         setMusics(res.data.musics);
-        setUser(res.data.user);
+        let userData = Object.assign(res.data.user, { image: res.data.image });
+        setUser(userData);
       })
       .catch((err) => {
         console.log(err.response);
