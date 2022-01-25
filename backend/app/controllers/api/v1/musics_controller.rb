@@ -1,6 +1,9 @@
 class Api::V1::MusicsController < ApplicationController
   def index
     musics = Music.order(created_at: :desc)
+    # user = current_api_v1_user
+    # image = user.image_path
+    p current_api_v1_user
     render json: musics
   end
 

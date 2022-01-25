@@ -8,4 +8,8 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
   has_many :musics
   has_one_attached :image
+
+  def image_path
+    return self.image.attached? ? Rails.application.routes.url_helpers.rails_representation_url(self.image.variant({}), only_path: true) : ""
+  end
 end

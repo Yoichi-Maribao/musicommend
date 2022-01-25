@@ -9,7 +9,6 @@ export const signUp = (params: SignUpParams) => {
 
 // サインイン（ログイン）
 export const signIn = (params: SignInParams) => {
-  console.log(params);
   return client.post('auth/sign_in', params);
 };
 

@@ -24,6 +24,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: '100px',
     boxShadow: '0 1px 1px 0 rgba(0,0,0,0.5)',
   },
+  mb1: {
+    marginBottom: '1rem',
+  },
+  pb1: {
+    paddingBottom: '1rem',
+  },
 }));
 
 const Sidebar = ({ user }: { user: User }) => {
@@ -59,7 +65,9 @@ const Sidebar = ({ user }: { user: User }) => {
 
   return (
     <Grid item md={4}>
-      <Paper className={classes.alignCenter}>
+      <Paper
+        className={classes.alignCenter + ' ' + classes.mb1 + ' ' + classes.pb1}
+      >
         <img
           src={user.image ? `http://localhost:3001/${user.image}` : NoImage}
           alt="プロフィール画像"

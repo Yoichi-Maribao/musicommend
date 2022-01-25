@@ -42,6 +42,7 @@ const EditUser: React.FC = () => {
   const [introduction, setIntroduction] = useState<string>('');
   const [image, setImage] = useState<Image>({ data: '', filename: '' });
   const [previewImageUrl, setPreviewImageUrl] = useState<string>('');
+  const apiUrl = 'http://localhost:3001';
 
   const fetchUser = (id: string) => {
     client
@@ -50,12 +51,14 @@ const EditUser: React.FC = () => {
         setName(res.data.name);
         setIntroduction(res.data.introduction);
         if (!res.data.image) setImage(res.data.image);
+        setPreviewImageUrl(apiUrl + res.data.image);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  const updateUser = () => {
+  const updateUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     const data = {
       user: {
         name: name,
@@ -63,20 +66,17 @@ const EditUser: React.FC = () => {
         image: image,
       },
     };
-    client
-      .patch(`/users/${params.id}`, data)
-      .then((res) => {
-        console.log(res);
-        if (res.status === 200) {
-          console.log('Successfully update User!');
-          navigate(`/users/${params.id}`);
-        } else {
-          console.log('Failed to update User...');
-        }
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
+
+    console.log(`Updating with following data: ${data}`);
+    try {
+      const res = await client.patch(`/users/${params.id}`, data);
+      if (res.status === 200) {
+        console.log('Successfully updated User!');
+        navigate(`/users/${params.id}`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const processImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,7 +99,7 @@ const EditUser: React.FC = () => {
 
   useEffect(() => {
     fetchUser(params.id!);
-  }, [params.id]);
+  }, []);
 
   if (
     currentUser !== null &&
@@ -115,6 +115,22 @@ const EditUser: React.FC = () => {
               title="アカウント情報変更"
             />
             <CardContent>
+              <UploadButton
+                name="image"
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  processImage(event)
+                }
+              >
+                プロフィール画像
+              </UploadButton>
+              {image && (
+                <CardMedia
+                  component="img"
+                  image={previewImageUrl}
+                  alt="プロフィール画像"
+                  sx={{ width: 60 }}
+                />
+              )}
               <TextField
                 variant="outlined"
                 required
@@ -133,14 +149,6 @@ const EditUser: React.FC = () => {
                 margin="dense"
                 onChange={(event) => setIntroduction(event.target.value)}
               />
-              <UploadButton
-                name="image"
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  processImage(event)
-                }
-              >
-                プロフィール画像
-              </UploadButton>
               <Button
                 type="submit"
                 variant="contained"
@@ -152,14 +160,6 @@ const EditUser: React.FC = () => {
               >
                 更新
               </Button>
-              {image && (
-                <CardMedia
-                  component="img"
-                  image={previewImageUrl}
-                  alt="プロフィール画像"
-                  sx={{ width: 60 }}
-                />
-              )}
             </CardContent>
           </Card>
         </form>

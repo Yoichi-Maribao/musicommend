@@ -19,6 +19,8 @@ const Musics: React.FC = () => {
   const [musics, setMusics] = useState<Music[]>([]);
   const { currentUser } = useContext(AuthContext);
 
+  console.log(currentUser);
+
   const getMusics = () => {
     client
       .get('musics')
@@ -50,10 +52,13 @@ const Musics: React.FC = () => {
             <TableBody>
               {musics.map((val, key) => {
                 return (
-                  <TableRow key={key}>
-                    <TableCell>
-                      <Link to={`/musics/${val.id}`}>{val.title}</Link>
-                    </TableCell>
+                  <TableRow
+                    key={key}
+                    component={Link}
+                    to={`/musics/${val.id}`}
+                    hover={true}
+                  >
+                    <TableCell>{val.title}</TableCell>
                     <TableCell>{val.body}</TableCell>
                   </TableRow>
                 );

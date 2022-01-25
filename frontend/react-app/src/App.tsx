@@ -44,8 +44,10 @@ const App: React.FC = () => {
 
       if (res?.data.isLogin === true) {
         setIsSignedIn(true);
-        setCurrentUser(res?.data.data);
-
+        const resCurrentUser = res?.data.data;
+        resCurrentUser.image = res?.data.image;
+        setCurrentUser(resCurrentUser);
+        console.log('Current user data: ');
         console.log(res?.data.data);
       } else {
         console.log('No current user');
