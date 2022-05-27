@@ -6,6 +6,7 @@ import { TextField, Button } from '@mui/material';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { ManageAccounts } from '@mui/icons-material';
 import client from 'lib/api/client';
+import ProfileImage from './ProfileImage';
 import { PostMusic, User } from 'interfaces/index';
 import NoImage from 'images/no_image.jpg';
 
@@ -17,12 +18,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   alignCenter: {
     textAlign: 'center',
-  },
-  image: {
-    borderRadius: '50%',
-    width: '100px',
-    height: '100px',
-    boxShadow: '0 1px 1px 0 rgba(0,0,0,0.5)',
   },
   mb1: {
     marginBottom: '1rem',
@@ -68,10 +63,8 @@ const Sidebar = ({ user }: { user: User }) => {
       <Paper
         className={classes.alignCenter + ' ' + classes.mb1 + ' ' + classes.pb1}
       >
-        <img
-          src={user.image ? `http://localhost:3001/${user.image}` : NoImage}
-          alt="プロフィール画像"
-          className={classes.image}
+        <ProfileImage
+          image={user.image ? `http://localhost:3001/${user.image}` : NoImage}
         />
         <h3>{user.name}</h3>
         <p>

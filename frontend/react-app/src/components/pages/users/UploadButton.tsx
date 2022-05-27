@@ -28,7 +28,12 @@ export const UploadButton: React.VFC<Props> = (props) => {
         multiple
         onChange={onChange}
       />
-      <Button variant="contained" component="span" {...props}>
+      <Button
+        variant="contained"
+        component="span"
+        {...props}
+        sx={{ margin: 2 }}
+      >
         {props.children}
       </Button>
     </label>

@@ -6,4 +6,5 @@ class Api::V1::Auth::SessionsController < ApplicationController
       render json: { is_login: false, message: "ユーザーが存在しません"}
     end
   end
+
 end

@@ -11,7 +11,8 @@ import {
 } from '@mui/material';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import UploadButton from './UploadButton';
-
+import ProfileImage from '../../layouts/ProfileImage';
+import NoImage from 'images/no_image.jpg';
 import client from 'lib/api/client';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -41,17 +42,19 @@ const EditUser: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [introduction, setIntroduction] = useState<string>('');
   const [image, setImage] = useState<Image>({ data: '', filename: '' });
-  const [previewImageUrl, setPreviewImageUrl] = useState<string>('');
+  const [previewImageUrl, setPreviewImageUrl] = useState<string>(NoImage);
   const apiUrl = 'http://localhost:3001';
 
-  const fetchUser = (id: string) => {
+  const fetchUser = async (id: string) => {
     client
       .get(`/users/${id}/edit`)
       .then((res) => {
-        setName(res.data.name);
-        setIntroduction(res.data.introduction);
-        if (!res.data.image) setImage(res.data.image);
-        setPreviewImageUrl(apiUrl + res.data.image);
+        setName(res.data.user.name);
+        setIntroduction(res.data.user.introduction);
+        if (res.data.image) {
+          setImage(res.data.image);
+          setPreviewImageUrl(apiUrl + res.data.image);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -99,6 +102,7 @@ const EditUser: React.FC = () => {
 
   useEffect(() => {
     fetchUser(params.id!);
+    console.log(name);
   }, []);
 
   if (
@@ -114,7 +118,14 @@ const EditUser: React.FC = () => {
               className={classes.alignCenter}
               title="アカウント情報変更"
             />
-            <CardContent>
+            <CardContent style={{ textAlign: 'center' }}>
+              {/* <CardMedia
+                component="img"
+                image={previewImageUrl}
+                alt="プロフィール画像"
+                sx={{ width: 100, margin: 'auto' }}
+              /> */}
+              <ProfileImage image={previewImageUrl} />
               <UploadButton
                 name="image"
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -123,14 +134,6 @@ const EditUser: React.FC = () => {
               >
                 プロフィール画像
               </UploadButton>
-              {image && (
-                <CardMedia
-                  component="img"
-                  image={previewImageUrl}
-                  alt="プロフィール画像"
-                  sx={{ width: 60 }}
-                />
-              )}
               <TextField
                 variant="outlined"
                 required
